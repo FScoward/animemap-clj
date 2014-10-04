@@ -11,18 +11,17 @@
        " [time] " (:time source)
        "\n"))
 
-(defn send-email [title txt]
+(defn send-email [subject txt]
   (postal/send-message {:host "smtp.gmail.com"
                  :user "<username>"
                  :pass "<password>"
                  :ssl :yes}
                 {:from "<from address>"
                  :to "<to address>"
-                 :subject "test"
+                 :subject subject
                  :body txt})
   {:code 0, :error :SUCCESS, :message "message sent"})
 
-;(map #(str "title: " (:title %) " time: " (:time %) " station: " (:station %)) today)
 (def body (map #(make-email-txt %) today))
 (reduce str body)
 
